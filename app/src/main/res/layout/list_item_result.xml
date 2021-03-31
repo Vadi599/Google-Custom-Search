@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_margin="5dp"
     android:elevation="5dp">
 
@@ -16,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            android:src="@drawable/ic_baseline_search_24"
+            tools:src="@drawable/ic_baseline_search_24"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:autoLink="web"
-            android:text="modern android ui - Pinterest"
+            tools:text="modern android ui - Pinterest"
             app:layout_constraintStart_toEndOf="@+id/ivThumbnail"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,7 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginStart="10dp"
-            android:text="https://www.figma.com/file/1UFPszUf8SdkSNZUKC3gLf/Test-project?node-id=0%3A1"
+            tools:text="https://www.figma.com/file/1UFPszUf8SdkSNZUKC3gLf/Test-project?node-id=0%3A1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvLink" />

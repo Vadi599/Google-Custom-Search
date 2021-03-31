@@ -1,13 +1,17 @@
 package com.example.juniortest.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.juniortest.R
 import com.example.juniortest.model.Results
+import com.example.juniortest.searching_results.SearchingResultsFragment
 
 class ResultsAdapter(var items: List<Results.Item>) :
     RecyclerView.Adapter<ResultsAdapter.ResultsViewHolder>() {
@@ -37,9 +41,11 @@ class ResultsAdapter(var items: List<Results.Item>) :
     override fun getItemCount(): Int {
         return items.size
     }
+
     override fun onBindViewHolder(holder: ResultsViewHolder, position: Int) {
         holder.link.text = items[position].link
         holder.displayLink.text = items[position].displayLink
-        holder.thumbnail.setImageResource(items[position].)
+        /* holder.thumbnail.setImageResource(items[position].pagemap.cseThumbnail[0].src.toInt())*/
+        Glide.with(holder.thumbnail.context).load(items[position].pagemap.cseThumbnail[0].src).into(holder.thumbnail)
     }
 }
