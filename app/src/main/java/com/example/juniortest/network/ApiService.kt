@@ -12,5 +12,5 @@ interface ApiService {
         @Query("key") myApiKey: String?,
         @Query("cx") myIdAccess: String?,
         @Query("q") myQuery: String?
-    ): Single<List<Results?>?>?
+    ): Single<Results>
 }

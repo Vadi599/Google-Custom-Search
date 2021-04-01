@@ -6,7 +6,6 @@ import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
-import androidx.fragment.app.Fragment
 import com.example.juniortest.R
 import com.example.juniortest.searching_results.SearchingResultsFragment
 
@@ -30,11 +29,11 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     override fun showSearchingResults() {
-         val fragment =
-                   SearchingResultsFragment
+         val fragment = SearchingResultsFragment()
                val transaction = supportFragmentManager.beginTransaction()
-               transaction.add(R.id.container, fragment)
+               transaction.add(R.id.container,fragment)
                transaction.addToBackStack(null)
                transaction.commit()
     }
 }
+

@@ -9,12 +9,14 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
-class SearchingResultsPresenter : SearchingResultsContract.Presenter,SingleObserver<Results> {
+class SearchingResultsPresenter(
+    private val view: SearchingResultsContract.View, context: Context?) : SearchingResultsContract.Presenter, SingleObserver<Results> {
 
     private val appApiClient = AppApiClient.get()
 
     override fun getResultsFromServer() {
-        appApiClient.results.s
+        appApiClient.results.doOnSuccess()subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+            .subscribe(this)
     }
 
     override fun onSuccess(t: Results) {

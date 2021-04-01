@@ -1,13 +1,21 @@
 package com.example.juniortest.searching_results
 
+import android.content.Context
+import android.net.ConnectivityManager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.core.content.ContextCompat.getSystemService
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.juniortest.R
+import com.example.juniortest.adapter.ResultsAdapter
 import com.example.juniortest.main.MainContract
+import com.example.juniortest.model.Results
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -20,7 +28,12 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class SearchingResultsFragment : Fragment(), SearchingResultsContract.View {
-
+    private lateinit var progressBar: ProgressBar
+    private lateinit var fragmentView: View
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: ResultsAdapter
+    private lateinit var results: MutableList<Results.Item>
+    private lateinit var presenter: SearchingResultsPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,8 +46,20 @@ class SearchingResultsFragment : Fragment(), SearchingResultsContract.View {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        presenter = SearchingResultsPresenter(
+            this,
+            context
+        )
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_searching_results, container, false)
+        fragmentView = inflater.inflate(R.layout.fragment_searching_results, null)
+        results = ArrayList()
+        presenter.getResultsFromServer()
+        progressBar = fragmentView.findViewById(R.id.progressView) as ProgressBar
+        recyclerView = fragmentView.findViewById<View>(R.id.rvResults) as RecyclerView
+        adapter = ResultsAdapter(results)
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.adapter = adapter
+        return fragmentView
     }
 
     companion object {
@@ -59,5 +84,10 @@ class SearchingResultsFragment : Fragment(), SearchingResultsContract.View {
 
     override fun showMessage(message: String?) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun showSearchingResults(results: List<Results.Item>) {
+        adapter.setResultsList(results)
+        progressBar.visibility = View.GONE
     }
 }
