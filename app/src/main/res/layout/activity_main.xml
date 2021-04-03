@@ -3,79 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
+    android:clickable="true"
     android:orientation="vertical"
     tools:context=".main.MainActivity">
 
     <include layout="@layout/toolbar" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="115dp"
-        android:layout_marginStart="41dp"
-        android:layout_marginEnd="58dp"
-        android:gravity="top"
-        android:fontFamily="@font/montserrat_semibold"
-        android:textColor="@color/black"
-        android:text="@string/google_search_analog"
-        android:textSize="20sp" />
-
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="14dp"
-        android:layout_marginStart="10dp"
-        android:elevation="16dp"
-        android:background="@drawable/bg_rect_stong"
-        android:layout_marginEnd="10dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginStart="6dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
-                android:layout_weight="0.06"
-                android:src="@drawable/ic_baseline_search_24" />
-
-            <EditText
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.94"
-                android:fontFamily="@font/montserrat_regular"
-                android:inputType="text"
-                android:backgroundTint="@android:color/transparent"
-                android:textSize="14sp"
-                android:hint="@string/query"/>
-
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
-
-    <Button
-        android:id="@+id/btn_start_searching"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="19dp"
-        android:layout_marginStart="17dp"
-        android:layout_marginEnd="15dp"
-        android:background="@drawable/bg_rounded_corners_button"
-        android:text="@string/begin_search"
-        android:fontFamily="@font/montserrat_medium"
-        android:textSize="12sp"
-        android:gravity="center"
-        android:elevation="10dp"
-        android:textColor="@color/white" />
-
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
 </LinearLayout>

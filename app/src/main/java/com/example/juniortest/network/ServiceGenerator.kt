@@ -18,5 +18,6 @@ object ServiceGenerator {
         .addConverterFactory(GsonConverterFactory.create())
     private val retrofit = retrofitBuilder.build()
     val apiService: ApiService = retrofit.create(
-        ApiService::class.java)
+        ApiService::class.java
+    )
 }
