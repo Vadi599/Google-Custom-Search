@@ -15,7 +15,9 @@ data class Results(
     val searchInformation: SearchInformation,
     @SerializedName("url")
     val url: Url
-) {
+)
+
+{
     data class Context(
         @SerializedName("title")
         val title: String

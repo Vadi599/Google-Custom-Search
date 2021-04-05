@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 import com.example.juniortest.R
 import com.example.juniortest.model.Results
 
-class ResultsAdapter(var items: List<Results.Item>) :
+class ResultsAdapter(private var resultsList: List<Results.Item>) :
     RecyclerView.Adapter<ResultsAdapter.ResultsViewHolder>() {
 
     override fun onCreateViewHolder(
@@ -24,26 +24,31 @@ class ResultsAdapter(var items: List<Results.Item>) :
         )
     }
 
-    fun setResultsList(items: List<Results.Item>) {
-        this.items = items
+    fun getResultsList(): List<Results.Item> {
+        return resultsList
+    }
+
+    fun setResultsList(resultsList: List<Results.Item>) {
+        this.resultsList = resultsList
         notifyDataSetChanged()
     }
 
     class ResultsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var thumbnail: ImageView = itemView.findViewById<View>(R.id.ivThumbnail) as ImageView
+        val thumbnail: ImageView = itemView.findViewById<View>(R.id.ivThumbnail) as ImageView
         var link: TextView = itemView.findViewById<View>(R.id.tvLink) as TextView
         var displayLink: TextView = itemView.findViewById<View>(R.id.tvDisplay_link) as TextView
     }
 
     override fun getItemCount(): Int {
-        return items.size
+        return resultsList.size
     }
 
     override fun onBindViewHolder(holder: ResultsViewHolder, position: Int) {
-        holder.link.text = items[position].link
-        holder.displayLink.text = items[position].displayLink
+        val resultsOfSearch=getResultsList()[position]
+        holder.displayLink.text = resultsOfSearch.displayLink
+        holder.link.text = resultsOfSearch.link
         /* holder.thumbnail.setImageResource(items[position].pagemap.cseThumbnail[0].src.toInt())*/
-        Glide.with(holder.thumbnail.context).load(items[position].pagemap.cseThumbnail[0].src)
+        Glide.with(holder.itemView.context).load(resultsOfSearch.pagemap.cseThumbnail[0].src)
             .into(holder.thumbnail)
     }
 }

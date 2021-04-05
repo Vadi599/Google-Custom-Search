@@ -36,6 +36,7 @@ class SearchFragment : Fragment(), SearchContract.View {
     private lateinit var adapter: ResultsAdapter
     private lateinit var etEntryField: EditText
     private lateinit var results: MutableList<Results.Item>
+    private lateinit var dataInput: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,8 +50,7 @@ class SearchFragment : Fragment(), SearchContract.View {
         savedInstanceState: Bundle?
     ): View? {
         presenter = SearchPresenter(
-            this,
-            context
+            this, context
         )
         // Inflate the layout for this fragment
         fragmentView = inflater.inflate(R.layout.fragment_search, null)
@@ -58,8 +58,7 @@ class SearchFragment : Fragment(), SearchContract.View {
         find = fragmentView.findViewById(R.id.tvManagedToFind) as TextView
         recyclerView = fragmentView.findViewById(R.id.rvResults) as RecyclerView
         results = ArrayList()
-        /* results.add(Results.Item(link = "", displayLink = ""))*/
-        adapter = ResultsAdapter(results as ArrayList<Results.Item>)
+        adapter = ResultsAdapter(results as List<Results.Item>)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         etEntryField = fragmentView.findViewById(R.id.etEntryField) as EditText
@@ -71,7 +70,6 @@ class SearchFragment : Fragment(), SearchContract.View {
             Toast.makeText(requireContext(), "Нет инета", Toast.LENGTH_SHORT).show();
         }
         btnSearch.setOnClickListener {
-            showResults(results as ArrayList<Results.Item>)
             showMessage()
             showVisibility()
         }
@@ -102,6 +100,7 @@ class SearchFragment : Fragment(), SearchContract.View {
     }
 
     override fun showResults(results: List<Results.Item>) {
+        dataInput = etEntryField.text.toString()
         adapter.setResultsList(results)
         progressBar.visibility = View.GONE
     }
@@ -111,7 +110,6 @@ class SearchFragment : Fragment(), SearchContract.View {
     }
 
     override fun showVisibility() {
-        progressBar.visibility = View.VISIBLE
         recyclerView.visibility = View.VISIBLE
         find.visibility = View.VISIBLE
         btnSearch.visibility = View.GONE

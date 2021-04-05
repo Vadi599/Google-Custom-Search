@@ -11,17 +11,18 @@ import io.reactivex.schedulers.Schedulers
 class SearchPresenter(
     private val view: SearchContract.View, context: Context?
 ) : SearchContract.Presenter,
-    SingleObserver<Results.Item> {
+    SingleObserver<Results> {
 
-    private val appApiClient = AppApiClient.get()
+     private val appApiClient = AppApiClient.get()
 
     override fun getResultsFromServer() {
         appApiClient.results.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
             .subscribe(this)
     }
 
-    override fun onSuccess(t: Results.Item) {
-
+    override fun onSuccess(t: Results) {
+        val resultsList = t.items
+        view.showResults(resultsList)
     }
 
     override fun onError(e: Throwable) {

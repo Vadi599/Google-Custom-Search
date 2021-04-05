@@ -5,7 +5,7 @@ import io.reactivex.Single
 
 
 class AppApiClient {
-    val results: Single<Results.Item>
+    val results: Single<Results>
         get() = ServiceGenerator.apiService.getResults(
             myApiKey = "AIzaSyC3dQDrC-QQlvr5E5_tgMCX_OJbJKGkSmY",
             myIdAccess = "ed4f51c91f68e70ec",

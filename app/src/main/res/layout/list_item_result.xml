@@ -16,16 +16,14 @@
             android:layout_marginStart="21dp"
             android:layout_marginTop="11dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/ic_baseline_search_24" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
-            android:id="@+id/tvLink"
+            android:id="@+id/tvDisplay_link"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="87dp"
             android:layout_marginTop="12dp"
-            android:autoLink="web"
             android:fontFamily="@font/montserrat_semibold"
             android:textColor="@color/dark_blue"
             android:textSize="14sp"
@@ -46,7 +44,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tvDisplay_link"
+            android:id="@+id/tvLink"
             android:layout_width="200dp"
             android:layout_height="40dp"
             android:layout_marginStart="87dp"
@@ -59,7 +57,7 @@
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvLink"
+            app:layout_constraintTop_toBottomOf="@+id/tvDisplay_link"
             tools:text="https://www.figma.com/file/1UFPszUf8SdkSNZUKC3gLf/Test-project?node-id=0%3A1" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
