@@ -13,7 +13,7 @@ class SearchPresenter(
 ) : SearchContract.Presenter,
     SingleObserver<Results> {
 
-     private val appApiClient = AppApiClient.get()
+    private val appApiClient = AppApiClient.get()
 
     override fun getResultsFromServer() {
         appApiClient.results.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())

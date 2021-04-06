@@ -35,8 +35,7 @@ class SearchFragment : Fragment(), SearchContract.View {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: ResultsAdapter
     private lateinit var etEntryField: EditText
-    private lateinit var results: MutableList<Results.Item>
-    private lateinit var dataInput: String
+    private lateinit var results: List<Results.Item>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,7 +57,7 @@ class SearchFragment : Fragment(), SearchContract.View {
         find = fragmentView.findViewById(R.id.tvManagedToFind) as TextView
         recyclerView = fragmentView.findViewById(R.id.rvResults) as RecyclerView
         results = ArrayList()
-        adapter = ResultsAdapter(results as List<Results.Item>)
+        adapter = ResultsAdapter(results)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         etEntryField = fragmentView.findViewById(R.id.etEntryField) as EditText
@@ -100,7 +99,6 @@ class SearchFragment : Fragment(), SearchContract.View {
     }
 
     override fun showResults(results: List<Results.Item>) {
-        dataInput = etEntryField.text.toString()
         adapter.setResultsList(results)
         progressBar.visibility = View.GONE
     }
