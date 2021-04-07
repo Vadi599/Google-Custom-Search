@@ -6,7 +6,7 @@ interface SearchContract {
 
     interface View {
 
-        fun showMessage()
+        fun showMessage(message: String?)
 
         fun showVisibility()
 

@@ -28,6 +28,7 @@ private const val ARG_PARAM2 = "param2"
 class SearchFragment : Fragment(), SearchContract.View {
 
     private lateinit var presenter: SearchPresenter
+    private lateinit var btnClear: Button
     private lateinit var btnSearch: Button
     private lateinit var progressBar: ProgressBar
     private lateinit var fragmentView: View
@@ -62,19 +63,29 @@ class SearchFragment : Fragment(), SearchContract.View {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         etEntryField = fragmentView.findViewById(R.id.etEntryField) as EditText
         btnSearch = fragmentView.findViewById<View>(R.id.btn_start_searching) as Button
+        btnClear = fragmentView.findViewById(R.id.btn_clear)
         btnSearch.isEnabled = false
         if (isNetworkConnected) {
             presenter.getResultsFromServer()
         } else {
             Toast.makeText(requireContext(), "Нет инета", Toast.LENGTH_SHORT).show();
         }
+        btnClear.setOnClickListener {
+            etEntryField.setText("")
+        }
         btnSearch.setOnClickListener {
-            showMessage()
+            showMessage(message = "Поиск результатов запроса")
             showVisibility()
         }
         etEntryField.doAfterTextChanged {
             btnSearch.isEnabled = it?.isNotEmpty()!!
+            if (etEntryField.text.toString() == "") {
+                btnClear.visibility = View.GONE
+            } else {
+                btnClear.visibility = View.VISIBLE
+            }
         }
+
         return fragmentView
     }
 
@@ -103,8 +114,8 @@ class SearchFragment : Fragment(), SearchContract.View {
         progressBar.visibility = View.GONE
     }
 
-    override fun showMessage() {
-        Toast.makeText(requireContext(), "Поиск результатов запроса", Toast.LENGTH_SHORT).show()
+    override fun showMessage(message: String?) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     override fun showVisibility() {

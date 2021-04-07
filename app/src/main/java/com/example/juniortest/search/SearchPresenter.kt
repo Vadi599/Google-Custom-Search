@@ -8,12 +8,14 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
-class SearchPresenter(
-    private val view: SearchContract.View, context: Context?
-) : SearchContract.Presenter,
+
+class SearchPresenter(private val view: SearchContract.View, context: Context?) :
+    SearchContract.Presenter,
+
     SingleObserver<Results> {
 
     private val appApiClient = AppApiClient.get()
+
 
     override fun getResultsFromServer() {
         appApiClient.results.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
@@ -26,7 +28,7 @@ class SearchPresenter(
     }
 
     override fun onError(e: Throwable) {
-
+        view.showMessage(e.message)
     }
 
     override fun onSubscribe(d: Disposable) {

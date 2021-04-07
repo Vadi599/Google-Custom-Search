@@ -43,7 +43,6 @@ class ResultsAdapter(private var resultsList: List<Results.Item?>) :
         holder.displayLink.text = resultsList[position]?.displayLink
         holder.link.text = resultsList[position]?.link
         Glide.with(holder.itemView.context)
-            .load(resultsList[position]?.pagemap?.cseImage?.get(0)?.src)
-            .into(holder.thumbnail)
+            .load(resultsList[position]?.pagemap?.cseImage?.get(0)?.src).into(holder.thumbnail)
     }
 }

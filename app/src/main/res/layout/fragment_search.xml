@@ -63,28 +63,35 @@
                 android:inputType="text"
                 android:textSize="14sp" />
 
+            <Button
+                android:id="@+id/btn_clear"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@drawable/ic_baseline_close_24"
+                android:visibility="gone" />
+
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 
-        <Button
-            android:id="@+id/btn_start_searching"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="17dp"
-            android:layout_marginTop="19dp"
-            android:layout_marginEnd="15dp"
-            android:visibility="visible"
-            android:background="@drawable/backgrounds_of_button"
-            android:elevation="10dp"
-            android:fontFamily="@font/montserrat_medium"
-            android:gravity="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardView"
-            android:text="@string/begin_search"
-            android:textColor="@color/white"
-            android:textSize="12sp" />
+    <Button
+        android:id="@+id/btn_start_searching"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="19dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/backgrounds_of_button"
+        android:elevation="10dp"
+        android:fontFamily="@font/montserrat_medium"
+        android:gravity="center"
+        android:text="@string/begin_search"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
     <TextView
         android:id="@+id/tvManagedToFind"
@@ -93,11 +100,11 @@
         android:layout_marginStart="21dp"
         android:layout_marginTop="14dp"
         android:layout_marginEnd="17dp"
-        android:visibility="gone"
         android:fontFamily="@font/montserrat_semibold"
         android:text="@string/managed_to_find"
         android:textColor="@color/black"
         android:textSize="14sp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView" />
@@ -107,8 +114,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
-        android:visibility="gone"
         android:orientation="vertical"
+        android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintTop_toBottomOf="@+id/tvManagedToFind"
         tools:listitem="@layout/list_item_result" />
