@@ -16,7 +16,7 @@
             android:layout_marginStart="21dp"
             android:layout_marginTop="11dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvDisplay_link"
@@ -24,8 +24,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="87dp"
             android:layout_marginTop="12dp"
+            android:autoLink="web"
             android:fontFamily="@font/montserrat_semibold"
-            android:textColor="@color/dark_blue"
+            android:textColorLink="@color/dark_blue"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
