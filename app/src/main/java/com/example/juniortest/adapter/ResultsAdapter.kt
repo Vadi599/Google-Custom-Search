@@ -1,13 +1,13 @@
 package com.example.juniortest.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.juniortest.R
+import com.example.juniortest.databinding.ListItemResultBinding
+import com.example.juniortest.glide_module.GlideApp
 import com.example.juniortest.model.Results
 
 class ResultsAdapter(private var resultsList: List<Results.Item?>) :
@@ -17,10 +17,10 @@ class ResultsAdapter(private var resultsList: List<Results.Item?>) :
         parent: ViewGroup,
         viewType: Int
     ): ResultsViewHolder {
-        val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.list_item_result, parent, false)
+        val binding =
+            ListItemResultBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ResultsViewHolder(
-            itemView
+            binding
         )
     }
 
@@ -29,10 +29,11 @@ class ResultsAdapter(private var resultsList: List<Results.Item?>) :
         notifyDataSetChanged()
     }
 
-    class ResultsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var thumbnail: ImageView = itemView.findViewById<View>(R.id.ivThumbnail) as ImageView
-        var link: TextView = itemView.findViewById<View>(R.id.tvLink) as TextView
-        var displayLink: TextView = itemView.findViewById<View>(R.id.tvDisplay_link) as TextView
+    class ResultsViewHolder(binding: ListItemResultBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        var thumbnail: ImageView = binding.ivThumbnail
+        var link: TextView = binding.tvLink
+        var displayLink: TextView = binding.tvDisplayLink
     }
 
     override fun getItemCount(): Int {
@@ -42,7 +43,8 @@ class ResultsAdapter(private var resultsList: List<Results.Item?>) :
     override fun onBindViewHolder(holder: ResultsViewHolder, position: Int) {
         holder.displayLink.text = resultsList[position]?.displayLink
         holder.link.text = resultsList[position]?.link
-        Glide.with(holder.itemView.context)
-            .load(resultsList[position]?.pagemap?.cseImage?.get(0)?.src).into(holder.thumbnail)
+        GlideApp.with(holder.itemView.context)
+            .load(resultsList[position]?.pagemap?.cseImage?.get(0)?.src)
+            .placeholder(R.drawable.ic_baseline_image_24).into(holder.thumbnail)
     }
 }

@@ -3,17 +3,17 @@ package com.example.juniortest.search
 import android.content.Context
 import android.net.ConnectivityManager
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.widget.doAfterTextChanged
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.juniortest.R
 import com.example.juniortest.adapter.ResultsAdapter
+import com.example.juniortest.databinding.FragmentSearchBinding
 import com.example.juniortest.model.Results
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -27,15 +27,10 @@ private const val ARG_PARAM2 = "param2"
  */
 class SearchFragment : Fragment(), SearchContract.View {
 
+    private var _binding: FragmentSearchBinding? = null
+    private val binding get() = _binding!!
     private lateinit var presenter: SearchPresenter
-    private lateinit var btnClear: Button
-    private lateinit var btnSearch: Button
-    private lateinit var progressBar: ProgressBar
-    private lateinit var fragmentView: View
-    private lateinit var find: TextView
-    private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: ResultsAdapter
-    private lateinit var etEntryField: EditText
     private lateinit var results: List<Results.Item>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,44 +44,41 @@ class SearchFragment : Fragment(), SearchContract.View {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        _binding = FragmentSearchBinding.inflate(
+            inflater, container, false
+        )
         presenter = SearchPresenter(
             this, context
         )
         // Inflate the layout for this fragment
-        fragmentView = inflater.inflate(R.layout.fragment_search, null)
-        progressBar = fragmentView.findViewById(R.id.progressBar) as ProgressBar
-        find = fragmentView.findViewById(R.id.tvManagedToFind) as TextView
-        recyclerView = fragmentView.findViewById(R.id.rvResults) as RecyclerView
+        val view = binding.root
         results = ArrayList()
         adapter = ResultsAdapter(results)
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        etEntryField = fragmentView.findViewById(R.id.etEntryField) as EditText
-        btnSearch = fragmentView.findViewById<View>(R.id.btn_start_searching) as Button
-        btnClear = fragmentView.findViewById(R.id.btn_clear)
-        btnSearch.isEnabled = false
+        binding.rvResults.adapter = adapter
+        binding.rvResults.layoutManager = LinearLayoutManager(requireContext())
+        binding.btnStartSearching.isEnabled = false
         if (isNetworkConnected) {
             presenter.getResultsFromServer()
         } else {
             Toast.makeText(requireContext(), "Нет инета", Toast.LENGTH_SHORT).show();
         }
-        btnClear.setOnClickListener {
-            etEntryField.setText("")
+        binding.btnClear.setOnClickListener {
+            binding.etEntryField.setText("")
         }
-        btnSearch.setOnClickListener {
+        binding.btnStartSearching.setOnClickListener {
             showMessage(message = "Поиск результатов запроса")
             showVisibility()
         }
-        etEntryField.doAfterTextChanged {
-            btnSearch.isEnabled = it?.isNotEmpty()!!
-            if (etEntryField.text.toString() == "") {
-                btnClear.visibility = View.GONE
+        binding.etEntryField.doAfterTextChanged {
+            binding.btnStartSearching.isEnabled = it?.isNotEmpty()!!
+            if (binding.etEntryField.text.toString() == "") {
+                binding.btnClear.visibility = View.GONE
             } else {
-                btnClear.visibility = View.VISIBLE
+                binding.btnClear.visibility = View.VISIBLE
             }
         }
 
-        return fragmentView
+        return view
     }
 
     companion object {
@@ -111,7 +103,7 @@ class SearchFragment : Fragment(), SearchContract.View {
 
     override fun showResults(results: List<Results.Item>) {
         adapter.setResultsList(results)
-        progressBar.visibility = View.GONE
+        binding.progressBar.visibility = View.GONE
     }
 
     override fun showMessage(message: String?) {
@@ -119,9 +111,9 @@ class SearchFragment : Fragment(), SearchContract.View {
     }
 
     override fun showVisibility() {
-        recyclerView.visibility = View.VISIBLE
-        find.visibility = View.VISIBLE
-        btnSearch.visibility = View.GONE
+        binding.rvResults.visibility = View.VISIBLE
+        binding.tvManagedToFind.visibility = View.VISIBLE
+        binding.btnStartSearching.visibility = View.GONE
     }
 
     private val isNetworkConnected: Boolean
@@ -130,5 +122,10 @@ class SearchFragment : Fragment(), SearchContract.View {
                 requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             return cm.activeNetworkInfo != null && cm.activeNetworkInfo!!.isConnected
         }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }
 
