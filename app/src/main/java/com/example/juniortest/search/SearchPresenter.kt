@@ -2,11 +2,8 @@ package com.example.juniortest.search
 
 import android.content.Context
 import android.net.ConnectivityManager
-import androidx.core.content.ContentProviderCompat.requireContext
-import com.example.juniortest.model.ResultSearchState
 import com.example.juniortest.model.Results
 import com.example.juniortest.network.AppApiClient
-import io.reactivex.Single
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable

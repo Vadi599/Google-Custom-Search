@@ -1,7 +1,5 @@
 package com.example.juniortest.search
 
-import android.content.Context
-import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,14 +7,9 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.juniortest.adapter.ResultsAdapter
 import com.example.juniortest.databinding.FragmentSearchBinding
-import com.example.juniortest.model.ResultSearchState
 import com.example.juniortest.model.Results
-import com.example.juniortest.network.ApiService
-import com.example.juniortest.network.ServiceGenerator.apiService
-import io.reactivex.Single
 
 
 // TODO: Rename parameter arguments, choose names that match

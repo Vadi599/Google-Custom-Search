@@ -1,6 +1,5 @@
 package com.example.juniortest.search
 
-import com.example.juniortest.model.ResultSearchState
 import com.example.juniortest.model.Results
 
 interface SearchContract {

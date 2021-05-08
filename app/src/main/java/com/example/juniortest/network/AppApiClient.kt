@@ -1,6 +1,5 @@
 package com.example.juniortest.network
 
-import com.example.juniortest.model.ResultSearchState
 import com.example.juniortest.model.Results
 import com.example.juniortest.network.ServiceGenerator.apiService
 import io.reactivex.Single
