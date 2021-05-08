@@ -12,7 +12,11 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.juniortest.adapter.ResultsAdapter
 import com.example.juniortest.databinding.FragmentSearchBinding
+import com.example.juniortest.model.ResultSearchState
 import com.example.juniortest.model.Results
+import com.example.juniortest.network.ApiService
+import com.example.juniortest.network.ServiceGenerator.apiService
+import io.reactivex.Single
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -47,49 +51,44 @@ class SearchFragment : Fragment(), SearchContract.View {
         _binding = FragmentSearchBinding.inflate(
             inflater, container, false
         )
-        presenter = SearchPresenter(
-            this, context
-        )
+        presenter = SearchPresenter(this, requireContext())
         // Inflate the layout for this fragment
         val view = binding.root
         results = ArrayList()
         adapter = ResultsAdapter(results)
         binding.rvResults.adapter = adapter
-        binding.rvResults.layoutManager = LinearLayoutManager(requireContext())
         binding.btnStartSearching.isEnabled = false
-        if (isNetworkConnected) {
-            presenter.getResultsFromServer()
-        } else {
-            Toast.makeText(requireContext(), "Нет инета", Toast.LENGTH_SHORT).show();
-        }
         binding.btnClear.setOnClickListener {
             binding.etEntryField.setText("")
         }
         binding.btnStartSearching.setOnClickListener {
-            showMessage(message = "Поиск результатов запроса")
-            showVisibility()
+            val enteredText = binding.etEntryField.text.toString()
+            presenter.getResultsFromServer(enteredText)
         }
         binding.etEntryField.doAfterTextChanged {
             binding.btnStartSearching.isEnabled = it?.isNotEmpty()!!
             if (binding.etEntryField.text.toString() == "") {
+                binding.rvResults.visibility = View.GONE
+                binding.tvManagedToFind.visibility = View.GONE
+                binding.btnStartSearching.visibility = View.VISIBLE
                 binding.btnClear.visibility = View.GONE
             } else {
                 binding.btnClear.visibility = View.VISIBLE
             }
         }
-
         return view
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SearchingResultsFragment.
-         */
+    /*companion object {
+        */
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment SearchingResultsFragment.
+     *//*
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
@@ -99,7 +98,7 @@ class SearchFragment : Fragment(), SearchContract.View {
                     putString(ARG_PARAM2, param2)
                 }
             }
-    }
+    }*/
 
     override fun showResults(results: List<Results.Item>) {
         adapter.setResultsList(results)
@@ -110,18 +109,14 @@ class SearchFragment : Fragment(), SearchContract.View {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
+
     override fun showVisibility() {
         binding.rvResults.visibility = View.VISIBLE
         binding.tvManagedToFind.visibility = View.VISIBLE
         binding.btnStartSearching.visibility = View.GONE
     }
 
-    private val isNetworkConnected: Boolean
-        get() {
-            val cm =
-                requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-            return cm.activeNetworkInfo != null && cm.activeNetworkInfo!!.isConnected
-        }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
