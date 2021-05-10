@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import com.example.juniortest.adapter.ResultsAdapter
@@ -26,6 +27,7 @@ class SearchFragment : Fragment(), SearchContract.View {
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
+    private var show: Boolean = true
     private lateinit var presenter: SearchPresenter
     private lateinit var adapter: ResultsAdapter
     private lateinit var results: List<Results.Item>
@@ -33,7 +35,6 @@ class SearchFragment : Fragment(), SearchContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-
         }
     }
 
@@ -49,24 +50,27 @@ class SearchFragment : Fragment(), SearchContract.View {
         val view = binding.root
         results = ArrayList()
         adapter = ResultsAdapter(results)
-        binding.rvResults.adapter = adapter
-        binding.btnStartSearching.isEnabled = false
-        binding.btnClear.setOnClickListener {
-            binding.etEntryField.setText("")
-        }
-        binding.btnStartSearching.setOnClickListener {
-            val enteredText = binding.etEntryField.text.toString()
-            presenter.getResultsFromServer(enteredText)
-        }
-        binding.etEntryField.doAfterTextChanged {
-            binding.btnStartSearching.isEnabled = it?.isNotEmpty()!!
-            if (binding.etEntryField.text.toString() == "") {
-                binding.rvResults.visibility = View.GONE
-                binding.tvManagedToFind.visibility = View.GONE
-                binding.btnStartSearching.visibility = View.VISIBLE
-                binding.btnClear.visibility = View.GONE
-            } else {
-                binding.btnClear.visibility = View.VISIBLE
+        binding.run {
+            rvResults.adapter = adapter
+            btnStartSearching.isEnabled = false
+            btnClear.setOnClickListener {
+                etEntryField.setText("")
+            }
+            btnStartSearching.setOnClickListener {
+                val enteredText = etEntryField.text.toString()
+                presenter.getResultsFromServer(enteredText)
+                showLoading(show)
+            }
+            etEntryField.doAfterTextChanged {
+                btnStartSearching.isEnabled = it?.isNotEmpty()!!
+                if (etEntryField.text.toString() == "") {
+                    rvResults.visibility = View.GONE
+                    tvManagedToFind.visibility = View.GONE
+                    btnStartSearching.visibility = View.VISIBLE
+                    btnClear.visibility = View.GONE
+                } else {
+                    btnClear.visibility = View.VISIBLE
+                }
             }
         }
         return view
@@ -102,14 +106,17 @@ class SearchFragment : Fragment(), SearchContract.View {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
-
     override fun showVisibility() {
-        binding.rvResults.visibility = View.VISIBLE
-        binding.tvManagedToFind.visibility = View.VISIBLE
-        binding.btnStartSearching.visibility = View.GONE
+        binding.run {
+            rvResults.visibility = View.VISIBLE
+            tvManagedToFind.visibility = View.VISIBLE
+            btnStartSearching.visibility = View.GONE
+        }
     }
 
-
+    override fun showLoading(show: Boolean) {
+        binding.progressBar.isVisible = show
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -17,8 +17,7 @@ class AppApiClient(private val apiService: ApiService) : ResultSearchStateInterf
         return apiService.getResults(
             myApiKey = "AIzaSyC3dQDrC-QQlvr5E5_tgMCX_OJbJKGkSmY",
             myIdAccess = "ed4f51c91f68e70ec",
-            myQuery = myQuery,
-            myNum = 10
+            myQuery = myQuery
         )
     }
 

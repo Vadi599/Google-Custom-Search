@@ -6,7 +6,7 @@ data class Results(
     @SerializedName("context")
     val context: Context,
     @SerializedName("items")
-    val items: List<Item>,
+    val items: List<Item>?,
     @SerializedName("kind")
     val kind: String,
     @SerializedName("queries")

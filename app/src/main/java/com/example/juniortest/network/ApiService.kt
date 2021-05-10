@@ -11,7 +11,6 @@ interface ApiService {
     fun getResults(
         @Query("key") myApiKey: String? = null,
         @Query("cx") myIdAccess: String? = null,
-        @Query("q") myQuery: String,
-        @Query("num") myNum: Int? = null
+        @Query("q") myQuery: String
     ): Single<Results>
 }

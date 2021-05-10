@@ -12,12 +12,13 @@ interface SearchContract {
 
         fun showResults(results: List<Results.Item>)
 
+        fun showLoading(show: Boolean)
     }
 
     interface Presenter {
 
-        fun getResultsFromServer(query:String)
+        fun getResultsFromServer(query: String)
 
-        fun isNetworkAvailable() : Boolean
+        fun isNetworkAvailable(): Boolean
     }
 }

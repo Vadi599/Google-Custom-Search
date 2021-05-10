@@ -50,7 +50,11 @@ class SearchPresenter(
 
                     override fun onSuccess(t: Results) {
                         val resultsList = t.items
-                        view.showResults(resultsList)
+                        if (resultsList == null) {
+                            view.showMessage("По вашему запросу ничего не найдено")
+                        } else {
+                            view.showResults(resultsList)
+                        }
                     }
 
                     override fun onError(e: Throwable) {
