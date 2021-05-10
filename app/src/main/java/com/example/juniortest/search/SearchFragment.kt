@@ -27,7 +27,6 @@ class SearchFragment : Fragment(), SearchContract.View {
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
-    private var showProgressBar: Boolean = true
     private lateinit var presenter: SearchPresenter
     private lateinit var adapter: ResultsAdapter
     private lateinit var results: List<Results.Item>
@@ -59,7 +58,6 @@ class SearchFragment : Fragment(), SearchContract.View {
             btnStartSearching.setOnClickListener {
                 val enteredText = etEntryField.text.toString()
                 presenter.getResultsFromServer(enteredText)
-                showLoading(showProgressBar)
             }
             etEntryField.doAfterTextChanged {
                 btnStartSearching.isEnabled = it?.isNotEmpty()!!
@@ -99,7 +97,6 @@ class SearchFragment : Fragment(), SearchContract.View {
 
     override fun showResults(results: List<Results.Item>) {
         adapter.setResultsList(results)
-        binding.progressBar.visibility = View.GONE
     }
 
     override fun showMessage(message: String?) {

@@ -41,6 +41,7 @@ class SearchPresenter(
         if (isNetworkAvailable()) {
             view.showMessage("Поиск результатов запроса")
             view.showVisibility()
+            view.showLoading(true)
             return appApiClient.instance.getResponse(query)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -50,6 +51,7 @@ class SearchPresenter(
 
                     override fun onSuccess(t: Results) {
                         val resultsList = t.items
+                        view.showLoading(false)
                         if (resultsList == null) {
                             view.showMessage("По вашему запросу ничего не найдено")
                         } else {
@@ -59,6 +61,7 @@ class SearchPresenter(
 
                     override fun onError(e: Throwable) {
                         view.showMessage(e.message)
+                        view.showLoading(false)
                     }
                 })
         } else {
