@@ -1,5 +1,6 @@
-package com.example.juniortest.search
+package com.example.juniortest.presentation
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.net.ConnectivityManager
 import com.example.juniortest.model.Results
@@ -8,40 +9,28 @@ import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import moxy.InjectViewState
+import moxy.MvpPresenter
 
-/**
- *
- * public class SearchPresenter {
- *
- *  private View view;
- *  public Context context;
- *
- *  public SearchPresenter(View view, Context context){
- *      this.view = view;
- *      this.context = context;
- *  }
- *
- * }
- */
-
+@InjectViewState
 class SearchPresenter(
-    private val view: SearchContract.View,
     val context: Context
-) :
-    SearchContract.Presenter {
+) : MvpPresenter<SearchView>() {
+
     private val appApiClient = AppApiClient
 
-    override fun isNetworkAvailable(): Boolean {
+    @SuppressLint("MissingPermission")
+    private fun isNetworkAvailable(): Boolean {
         val cm =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         return cm.activeNetworkInfo != null && cm.activeNetworkInfo!!.isConnected
     }
 
-    override fun getResultsFromServer(query: String) {
+    fun getResultsFromServer(query: String) {
         if (isNetworkAvailable()) {
-            view.showMessage("Поиск результатов запроса")
-            view.showVisibility()
-            view.showLoading(true)
+            viewState.showMessage("Поиск результатов запроса")
+            viewState.showVisibility()
+            viewState.showLoading(true)
             return appApiClient.instance.getResponse(query)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -51,21 +40,21 @@ class SearchPresenter(
 
                     override fun onSuccess(t: Results) {
                         val resultsList = t.items
-                        view.showLoading(false)
+                        viewState.showLoading(false)
                         if (resultsList == null) {
-                            view.showMessage("По вашему запросу ничего не найдено")
+                            viewState.showMessage("По вашему запросу ничего не найдено")
                         } else {
-                            view.showResults(resultsList)
+                            viewState.showResults(resultsList)
                         }
                     }
 
                     override fun onError(e: Throwable) {
-                        view.showMessage(e.message)
-                        view.showLoading(false)
+                        viewState.showMessage(e.message)
+                        viewState.showLoading(false)
                     }
                 })
         } else {
-            view.showMessage("Нет интернета!")
+            viewState.showMessage("Нет интернета!")
         }
     }
 }
