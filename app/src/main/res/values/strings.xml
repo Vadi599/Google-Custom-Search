@@ -1,14 +1,11 @@
 <resources>
-    <string name="app_name">Google Custom Search</string>
+    <string name="app_name">Тестовое приложение</string>
     <string name="google_search_analog">Аналог поисковика гугл</string>
     <string name="query">Введите запрос для поиска</string>
     <string name="begin_search">Начать поиск</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="managed_to_find">Вот что удалось найти:</string>
+    <string name="test_application">Тестовое приложение</string>
     <string name="thumbnail">thumbnail</string>
-    <string name="do_you_want_to_exit">Вы уверены, что хотите выйти из приложения?</string>
-    <string name="yes">Да</string>
-    <string name="no">Нет</string>
-    <string name="exit_from_application">Выход из приложения</string>
 </resources>

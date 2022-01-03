@@ -8,9 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.juniortest.R
 import com.example.juniortest.databinding.ListItemResultBinding
 import com.example.juniortest.glide_module.GlideApp
-import com.example.juniortest.model.Item
+import com.example.juniortest.model.Results
 
-class ResultsAdapter(private var resultsList: List<Item?>) :
+class ResultsAdapter(private var resultsList: List<Results.Item?>) :
     RecyclerView.Adapter<ResultsAdapter.ResultsViewHolder>() {
 
     override fun onCreateViewHolder(
@@ -24,7 +24,7 @@ class ResultsAdapter(private var resultsList: List<Item?>) :
         )
     }
 
-    fun setResultsList(resultsList: List<Item?>) {
+    fun setResultsList(resultsList: List<Results.Item?>) {
         this.resultsList = resultsList
         notifyDataSetChanged()
     }
