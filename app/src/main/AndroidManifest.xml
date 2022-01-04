@@ -16,6 +16,7 @@
         android:theme="@style/Theme.JuniorTest">
         <activity
             android:name=".activity.MainActivity"
+            android:exported="true"
             android:configChanges="keyboardHidden|orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
