@@ -38,8 +38,8 @@ class SearchPresenter(
                     override fun onSubscribe(d: Disposable) {
                     }
 
-                    override fun onSuccess(t: Results) {
-                        val resultsList = t.items
+                    override fun onSuccess(results: Results) {
+                        val resultsList = results.items
                         viewState.showLoading(false)
                         if (resultsList == null) {
                             viewState.showMessage("По вашему запросу ничего не найдено")
