@@ -49,7 +49,7 @@ class SearchPresenter(
                     }
 
                     override fun onError(e: Throwable) {
-                        viewState.showMessage(e.message)
+                        viewState.showMessage("Ошибка!По вашему запросу ничего не найдено." + e.message)
                         viewState.showLoading(false)
                     }
                 })
